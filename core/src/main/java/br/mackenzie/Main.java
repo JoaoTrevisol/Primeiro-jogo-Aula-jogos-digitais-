@@ -16,14 +16,21 @@ public class Main implements ApplicationListener {
     SpriteBatch spriteBatch;
     FitViewport viewport;
     Sprite bucketSprite;
+
+    Texture backgroundTexture;
+
     @Override
     public void create() {
         bucketTexture = new Texture("bucket.png");
+        backgroundTexture = new Texture("background.png");
+
         spriteBatch = new SpriteBatch();
         viewport = new FitViewport(8,5);
 
         bucketSprite = new Sprite(bucketTexture);
         bucketSprite.setSize(1,1);
+
+
         // Prepare your application here.
     }
 
@@ -67,6 +74,10 @@ public class Main implements ApplicationListener {
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
+
+        float worldWidth = viewport.getWorldWidth();
+        float worldHeight = viewport.getWorldHeight();
+
         bucketSprite.draw(spriteBatch);
         spriteBatch.end();
 
