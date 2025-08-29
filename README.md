@@ -30,9 +30,4 @@ Useful Gradle tasks and flags:
 - `lwjgl3:run`: starts the application.
 - `test`: runs unit tests (if any).
 
-Note that most tasks that are not specific to a single project can be run with `name:` prefix, where the `name` should be replaced with the ID of a specific project.
-For example, `core:clean` removes `build` folder only from the `core` project.
-=======
-# Primeiro-jogo-Aula-jogos-digitais-
-Primeiro jogo utilizando o Libgdx 
->>>>>>> 462a117e69935a2a1758efd4c39641bc096d3269
+
