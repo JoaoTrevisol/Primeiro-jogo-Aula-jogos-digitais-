@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -18,6 +20,8 @@ public class Main implements ApplicationListener {
     Sprite bucketSprite;
 
     Texture backgroundTexture;
+    Vector2 touchPos;
+
 
     @Override
     public void create() {
@@ -29,6 +33,9 @@ public class Main implements ApplicationListener {
 
         bucketSprite = new Sprite(bucketTexture);
         bucketSprite.setSize(1,1);
+
+        touchPos = new Vector2();
+
 
 
         // Prepare your application here.
@@ -53,7 +60,7 @@ public class Main implements ApplicationListener {
     }
 
     private void input() {
-        float speed =  .65f;
+        float speed =  4f;
         float delta = Gdx.graphics.getDeltaTime();
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
@@ -62,10 +69,24 @@ public class Main implements ApplicationListener {
             bucketSprite.translateX(-speed * delta);
 
         }
+        if (Gdx.input.isTouched()){
+            touchPos.set(Gdx.input.getX(), Gdx.input.getY());
+            viewport.unproject(touchPos);
+            bucketSprite.setCenterX(touchPos.x);
+
+
+        }
 
     }
 
     private void logic(){
+        float worldWidth = viewport.getWorldWidth();
+        float bucketWidth = bucketSprite.getWidth();
+        bucketSprite.setX(MathUtils.clamp(bucketSprite.getX(), 0,worldWidth));
+
+
+
+
 
     }
 
@@ -77,6 +98,8 @@ public class Main implements ApplicationListener {
 
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
+        spriteBatch.draw(backgroundTexture, 0,0,worldWidth,worldHeight);
+
 
         bucketSprite.draw(spriteBatch);
         spriteBatch.end();
